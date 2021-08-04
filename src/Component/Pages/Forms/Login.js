@@ -41,7 +41,7 @@ function Login(props) {
     if(!myState === false){
       history.push({
         pathname: '/contact-list',
-        state: Local.checkLogin()
+        state: myState
       })
     }
   },[myState, history , dispatch]);
