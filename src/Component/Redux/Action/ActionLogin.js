@@ -3,6 +3,7 @@ export const CHECK_LOGIN = "CHECK_LOGIN";
 export const LOGOUT = "LOGOUT";
 export const AUTHENTICATE_LOGIN = "AUTHENTICATE_LOGIN";
 export const ADD_USER = "ADD_USER";
+
 export const checkLogin = () => {
   const status = Local.checkLogin();
   return {
@@ -10,6 +11,7 @@ export const checkLogin = () => {
     userInfo: status,
   };
 };
+
 const create_UUID = () => {
   var dt = new Date().getTime();
   var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
@@ -54,7 +56,6 @@ export const authenticateLogin = (loginInfo) => {
       if (!localStorage.getItem("contactBook")) {
         localStorage.setItem("contactBook", JSON.stringify(emptyArray));
       }
-      console.log("login info", loginInfo);
       let local = JSON.parse(localStorage.getItem("contactBook"));
       const testLogin = local.findIndex(function (element) {
         return (

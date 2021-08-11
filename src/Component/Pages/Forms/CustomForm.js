@@ -1,33 +1,14 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { load as LoadEdit } from "../Redux/EditReducer";
-import validate from "../Component/Validate";
-const renderField = ({
-  input,
-  label,
-  type,
-  meta: { touched, error, warning },
-}) => (
-  <div>
-    <label className="text-list">{label}</label>
-    <div>
-      <input
-        {...input}
-        placeholder={label}
-        type={type}
-        className="form-control form-rounded mt-2"
-      />
-      {touched &&
-        ((error && <span className="text-danger">{error}</span>) ||
-          (warning && <span>{warning}</span>))}
-    </div>
-  </div>
-);
+import { load as LoadEdit } from "../../Redux/Reducer/EditReducer";
+import validate from "./Validate";
+import renderField from "./RenderField";
 
 let CustomForm = (props) => {
   const { handleSubmit, submitting, load } = props;
   const data = props.data;
+
   load(data);
   return (
     <div className="container-fluid  ">
@@ -69,12 +50,14 @@ let CustomForm = (props) => {
     </div>
   );
 };
+
 CustomForm = reduxForm({
   form: "CustomForm",
   enableReinitialize: true,
   destroyOnUnmount: true,
   validate,
 })(CustomForm);
+
 CustomForm = connect(
   (state) => ({
     initialValues: state.account.data,

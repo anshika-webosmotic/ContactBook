@@ -1,8 +1,24 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Media } from "react-bootstrap";
+import Local from "../../Utils/Local";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const HOCRegistration = (OriginalComp) => {
-  function newComponent() {
+
+
+  function NewComponent() {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const loginState = useSelector((state) => state.loginStatus);
+    useEffect(() => {
+        if (!loginState === false) {
+          history.push({
+            pathname: "/contact-list",
+            state: Local.checkLogin(),
+          });
+        }
+      }, [loginState, history, dispatch]);
     return (
       <div className="bg-light p-5 d-flex justify-content-center">
         <div className="w-75 bg-primitive d-flex rounded shadow-lg">
@@ -33,7 +49,7 @@ const HOCRegistration = (OriginalComp) => {
       </div>
     );
   }
-  return newComponent;
+  return NewComponent;
 };
 
 export default HOCRegistration;

@@ -1,8 +1,6 @@
-import Local from '../../Utils/Local'
-import { CHECK_LOGIN , AUTHENTICATE_LOGIN, LOGOUT } from '../Action/ActionLogin';
-const initialState = () => {
-  return Local.checkLogin();
-};
+import { CHECK_LOGIN, AUTHENTICATE_LOGIN, LOGOUT } from "../Action/ActionLogin";
+import Local from  '../../Utils/Local';
+const initialState = Local.checkLogin();
 
 export const loginStatus = (state = initialState, action) => {
   switch (action.type) {

@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../../../App.css";
 import { Card } from "react-bootstrap";
 import { Field, reduxForm } from "redux-form";
 import validate from "./Validate";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addUser } from "../../Redux/Action/ActionLogin";
 import renderField from "./RenderField";
 import { useHistory } from "react-router-dom";
-import { checkLogin } from "../../Redux/Action/ActionLogin";
-import Local from "../../Utils/Local";
 import HOCRegistration from "./HOCRegistration";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,17 +15,6 @@ function SignupForm(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { handleSubmit, reset, submitting } = props;
-
-  const myState = useSelector((state) => state.loginStatus);
-  useEffect(() => {
-    dispatch(checkLogin());
-    if (!myState === false) {
-      history.push({
-        pathname: "/contact-list",
-        state: Local.checkLogin(),
-      });
-    }
-  }, [myState, history, dispatch]);
 
   function notifySuccess() {
     toast.success("You Have Registered Successfully");
@@ -38,7 +25,6 @@ function SignupForm(props) {
 
   const submitForm = (values) => {
     dispatch(addUser(values)).then((res) => {
-      console.log(res.isReg);
       if (res.isReg) {
         notifySuccess();
         history.push("/login");
@@ -62,7 +48,6 @@ function SignupForm(props) {
           </span>
         </Card.Title>
         <Card.Text>
-          
           <form onSubmit={handleSubmit((values) => submitForm(values))}>
             <div>
               <div>

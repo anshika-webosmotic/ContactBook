@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { checkLogin, authenticateLogin } from "../../Redux/Action/ActionLogin";
+import { authenticateLogin } from "../../Redux/Action/ActionLogin";
 import Local from "../../Utils/Local";
 import { Field, reduxForm } from "redux-form";
 import { Card } from "react-bootstrap";
@@ -17,22 +17,16 @@ function Login(props) {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const myState = useSelector((state) => state.loginStatus);
-
-  useEffect(() => {
-    dispatch(checkLogin());
-    if (!myState === false) {
-      history.push({
-        pathname: "/contact-list",
-        state: Local.checkLogin(),
-      });
-    }
-  }, [myState, history, dispatch]);
 
   const submitForm = (values) => {
     dispatch(authenticateLogin(values)).then((res) => {
       if (!res.shouldLogin) {
         notifyWarn();
+      } else {
+        history.push({
+          pathname: "/contact-list",
+          state: Local.checkLogin(),
+        });
       }
     });
     dispatch(reset("login"));
